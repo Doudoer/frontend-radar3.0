@@ -1,7 +1,7 @@
 FROM node:22-bookworm-slim AS build
 
 WORKDIR /app
-ARG VITE_API_URL=/api
+ARG VITE_API_URL=http://46.225.4.89:3001/api
 ENV VITE_API_URL=$VITE_API_URL
 COPY package*.json ./
 RUN npm ci
