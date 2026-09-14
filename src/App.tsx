@@ -1,6 +1,4 @@
-import React, { Suspense, lazy, useEffect } from 'react';
-import { io } from 'socket.io-client';
-import { toast } from 'react-hot-toast';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { MotionConfig } from 'framer-motion';
 import { AuthProvider, useAuth } from './store/AuthContext';
@@ -197,30 +195,6 @@ const AppRoutes: React.FC = () => {
 };
 
 const App: React.FC = () => {
-  useEffect(() => {
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:3001/api';
-    const socketUrl = apiUrl.split('/api')[0];
-    const socket = io(socketUrl);
-    
-    socket.on('order:created', (order: any) => {
-      toast.success(`Nueva Orden: ${order.order_code}`, {
-        icon: '📦',
-        duration: 5000
-      });
-    });
-
-    socket.on('claim:created', (claim: any) => {
-      toast.error(`Nuevo RECLAMO: #${claim.id}`, {
-        icon: '⚠️',
-        duration: 8000
-      });
-    });
-
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
-
   return (
     <ThemeProvider>
       <AuthProvider>
